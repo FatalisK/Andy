@@ -15,6 +15,7 @@ namespace Andy.Core
         private List<GameObjects> _listeMonde;
 
 
+
         public Color collisionColor
         {
             get { return _collisionColor; }
@@ -40,13 +41,12 @@ namespace Andy.Core
             _listeMonde.Add(e);
             int i,j;
 
-            for (i = (int)e._sprite._location.X; i < (int)e._sprite._location.X + e._sprite.getFrameWidth(); i++)
+            for (i = (int)e.sprite.location.X; i < (int)e.sprite.location.X + e.sprite.getFrameWidth(); i++)
             {
 
-                for (j = (int)e._sprite._location.Y; j < (int)e._sprite._location.Y + e._sprite.getFrameHeight(); j++)
+                for (j = (int)e.sprite.location.Y; j < (int)e.sprite.location.Y + e.sprite.getFrameHeight(); j++)
                 {
                     colorTab[i, j] = collisionColor;
-                    //Console.Write(i + "," + j + "X" + (int)e._sprite._location.X + "Y" + (int)e._sprite._location.Y+ "     ");
                 }
 
             }

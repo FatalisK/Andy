@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Andy.Core
 {
-    public class Ennemies : GameObjects
+    public class Ennemies
     {
         public Ennemies(){}
     }

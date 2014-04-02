@@ -48,13 +48,15 @@ namespace Andy
         {
             // TODO: Add your initialization logic here
             Sprite s_world = new Sprite(new Vector2(0, 0),800,600);
-            Sprite s_andy = new Sprite( new Vector2(0, 400),9,70,110,0.1f,new Vector2(0,0));
-            Sprite s_plat = new Sprite(new Vector2(100, 500), 100, 25);
+            Sprite s_andy = new Sprite( new Vector2(0, 530),9,70,110,0.1f,new Vector2(0,0));
+            Sprite s_plat = new Sprite(new Vector2(200, 490), 100, 25);
 
             s_world.setTexture(Content.Load<Texture2D>("world"));
             s_andy.setTexture(Content.Load<Texture2D>("SuperSprite"));
             s_plat.setTexture(Content.Load<Texture2D>("platforme"));
 
+            s_andy.initCoulour();
+            s_plat.initCoulour();
 
             string text;
 
@@ -70,7 +72,6 @@ namespace Andy
             player = new Player(s_andy,world);
             p1 = new Plateforme(s_plat);
 
-            int i, j;
       
 
             world.ajouterElem(p1);
@@ -115,6 +116,7 @@ namespace Andy
 
             player.UpdateFrame(gameTime);
             player.Move(Keyboard.GetState());
+            player.Physique();
             base.Update(gameTime);
         }
 
