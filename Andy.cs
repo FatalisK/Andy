@@ -24,7 +24,7 @@ namespace Andy
         public const int WINDOW_HEIGHT = 600;
         World world;
         Player player;
-        Plateforme p1;
+        Plateforme p1,p2;
 
 
 
@@ -48,33 +48,30 @@ namespace Andy
         {
             // TODO: Add your initialization logic here
             Sprite s_world = new Sprite(new Vector2(0, 0),800,600);
-            Sprite s_andy = new Sprite( new Vector2(0, 530),9,70,110,0.1f,new Vector2(0,0));
-            Sprite s_plat = new Sprite(new Vector2(200, 490), 100, 25);
+            Sprite s_andy = new Sprite( new Vector2(300, 530),9,70,110,0.1f,new Vector2(0,0));
+            Sprite s_plat = new Sprite(new Vector2(200, 500), 100, 25);
+            Sprite s_plat1 = new Sprite(new Vector2(600, 575), 100, 25);
+
 
             s_world.setTexture(Content.Load<Texture2D>("world"));
             s_andy.setTexture(Content.Load<Texture2D>("SuperSprite"));
             s_plat.setTexture(Content.Load<Texture2D>("platforme"));
+            s_plat1.setTexture(Content.Load<Texture2D>("platforme"));
 
             s_andy.initCoulour();
             s_plat.initCoulour();
+            s_plat1.initCoulour();
 
-            string text;
-
-            StreamWriter sw = new StreamWriter("./texte.txt");//création du fichier 
-
-            text = "test";
-            sw.WriteLine("{0}", text);//enregistrement du message dans le fichier 
-            sw.Close();
-
-
-
-            world = new World(s_world,Color.Red);
-            player = new Player(s_andy,world);
+            world = new World(s_world);
             p1 = new Plateforme(s_plat);
+            p2 = new Plateforme(s_plat1);
+            player = new Player(s_andy, world);
+
 
       
 
             world.ajouterElem(p1);
+            world.ajouterElem(p2);
 
         
 
@@ -113,10 +110,10 @@ namespace Andy
                 Exit();
 
             // TODO: Add your update logic here
-
+            Collision.Collided(player, player.getWorld());
             player.UpdateFrame(gameTime);
             player.Move(Keyboard.GetState());
-            player.Physique();
+            player.Physique(player);
             base.Update(gameTime);
         }
 
@@ -138,6 +135,7 @@ namespace Andy
             world.Draw(spriteBatch);
             player.DrawAnimation(spriteBatch);
             p1.Draw(spriteBatch);
+            p2.Draw(spriteBatch);
      
             spriteBatch.End();
             base.Draw(gameTime);

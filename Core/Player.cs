@@ -6,42 +6,57 @@ using System.Text;
 using Microsoft.Xna.Framework.Input;
 namespace Andy.Core
 {
-    public class Player : GameObjects
+    public class Player : World
     {
-
+        private float _mass;
         private float _saut;
         private float _hauteurSaut;
-        private Collision.Direction _collidedDirection;
-        private Collision.Direction _c_interdite;
         private bool _veutSauter = false;
-        public Collision.Direction collidedDirection
-        {
-            get { return _collidedDirection; }
-            set { _collidedDirection = value; }
-        }
+        private World _world;
         public Collision.Direction ancienneDirection;
-
         public Player(Sprite s,World world)
-            : base(s,0.1f,world)
+            : base(s)
         {
+           _masse = 10;
+            _world = world;
             _direction = Collision.Direction.RIGHT;
             ancienneDirection = Collision.Direction.RIGHT;
-            _c_interdite = Collision.Direction.NONE;
             _vitesse.X = 2;
-            _saut = 0;
-            _collidedDirection = Collision.Direction.NONE;
+            _vitesse.Y = 20;
+            _saut = 50;
+            typeobjet =TypeObjet.PERS;
 
         }
 
-        
 
-
+        public World getWorld()
+        {
+            return _world;
+        }
+        public override float getMasse(){
+            return _mass;
+        }
         public float getVitesse()
         {
             return _vitesse.X;
         }
 
-        public float getSaut()
+        public bool getVeutSauter()
+        {
+            return _veutSauter;
+        }
+
+        public void setVeutSauter(bool b)
+        {
+            _veutSauter = b;
+        }
+
+        public float getHauteurSaut()
+        {
+            return _hauteurSaut;
+        }
+
+        public override float getSaut()
         {
             return _saut;
         }
@@ -49,17 +64,16 @@ namespace Andy.Core
         {
             var keys = state.GetPressedKeys();
 
-            //if (keys.Length > 0)
-            //{
+    
 
-            if (Collision.Collided(this, _world))
+            if (keys.Length > 0)
             {
-                _c_interdite = ancienneDirection;
-            }
+
+
                
                 if (state.IsKeyDown(Keys.Z))
                 {
-                    if (!inTheAir())
+                    if (!inTheAir()||collisionEnAir)
                     {
                         _saut = 2;
                         _hauteurSaut = sprite.location.Y - 200;
@@ -67,18 +81,17 @@ namespace Andy.Core
 
 
                     _direction = Collision.Direction.TOP;
-                    
-                    _c_interdite = Collision.Direction.NONE;
+                    sprite.location.Y += _vitesse.X;
+
                         
 
                     }
 
                 }
-                if (state.IsKeyDown(Keys.Q)&&_c_interdite!=Collision.Direction.LEFT)
+                if (state.IsKeyDown(Keys.Q)/*&&_c_interdite!=Collision.Direction.LEFT*/)
                 {
                     _direction = Collision.Direction.LEFT;
                     sprite.location.X -= _vitesse.X;
-                    _c_interdite = Collision.Direction.NONE;
 
                         
                     
@@ -86,26 +99,26 @@ namespace Andy.Core
                 if (state.IsKeyDown(Keys.S))
                 {
                     _direction = Collision.Direction.BOT;
-                    _c_interdite = Collision.Direction.NONE;
+                    //sprite.location.Y += _vitesse.X;
+
 
                 }
-                if (state.IsKeyDown(Keys.D) && _c_interdite!=Collision.Direction.RIGHT)
+                if (state.IsKeyDown(Keys.D)/* && _c_interdite!=Collision.Direction.RIGHT*/)
                 {
                     _direction = Collision.Direction.RIGHT;
-                    _c_interdite = Collision.Direction.NONE;
 
 
                     sprite.location.X += _vitesse.X;
                        
                   }
                 
-            //}
+            }
             
-            //else
-            //{
-             //   _direction = Collision.Direction.PASS;
+            else
+            {
+                _direction = Collision.Direction.PASS;
 
-//            }
+            }
 
             switch (_direction)
             {
@@ -142,51 +155,9 @@ namespace Andy.Core
      
         }
 
-        public void Physique()
-        {
-            float Poids = _masse * _gravity;
-            float Accel = Poids + _saut;
+        
 
-            if (_veutSauter) { 
-
-    
-    
-
-            if (sprite.location.Y > _hauteurSaut)
-            {
-                if (_direction == Collision.Direction.RIGHT) {
-                    sprite.location.X = sprite.location.X + 0.5f * Accel + _vitesse.X;
-
-                }
-                if (_direction == Collision.Direction.LEFT)
-                {
-                    sprite.location.X = sprite.location.X -( _vitesse.X  + 0.5f * Accel) ;
-
-                }
-                sprite.location.Y = sprite.location.Y - (0.5f * Accel + _vitesse.Y);
-            }
-            else
-            {
-                _veutSauter = false;
-            }
-
-                //_vitesse.X = 0.5f * Accel + _vitesse.X + sprite.location.X;
-            //_vitesse.Y = 0.5f * Accel + _vitesse.Y + sprite.location.Y;
-        }
-
-            if (!_veutSauter)
-            {
-                if (sprite.location.Y < 490) { sprite.location.Y = sprite.location.Y + (0.5f * Accel + _vitesse.Y); }
-
-                if (sprite.location.Y > 490) { sprite.location.Y = 490; }
-            }
-
-            if (Collision.Collided(this, _world) && inTheAir())
-            {
-                sprite.location.Y = sprite.location.Y - (0.5f * Accel + _vitesse.Y);
-
-            }
-        }
+       
     }
 
 

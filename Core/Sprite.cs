@@ -33,14 +33,14 @@ namespace Andy.Core
 
         }
 
-        public Sprite(Vector2 position,int totalFrames, int frameWidth, int frameHeight,float frameTime,Vector2 frameIndex)
+        public Sprite(Vector2 position,int totalFrames, int frameWidth, int frameHeight,float frameTime,Vector2 frameInde)
         {
             location = position;
             _totalFrames = totalFrames;
             _frameWidth = frameWidth;
             _frameHeight = frameHeight;
             _frameTime = frameTime;
-            frameIndex = frameIndex;
+            frameIndex = frameInde;
         }
 
         public Rectangle Bbox
@@ -87,32 +87,8 @@ namespace Andy.Core
            pixelColor = new Color[_texture.Width * _texture.Height];
            _couleurText = new Color[_texture.Width, _texture.Height];
            pixelColor = new Color[_texture.Width * _texture.Height];
-
            getTexture().GetData<Color>(pixelColor);
-           /*//Permet de creer une texture avec les zone à collisoin en rouge (je sais pas le quoi le mieux entre ça et la cmoparaison des couches alpha
-           int i,j;
-           for (i = 0; i < _texture.Width; i++)
-           {
-               for (j = 0; j < _texture.Height; j++)
-               {
 
-                   if (pixelColor[i + j * _texture.Width].A == 0)
-                   {
-                       pixelColor[i + j * _texture.Width] = Color.White;
-                       _couleurText[i, j] = Color.White;
-
-                   }
-                   else
-                   {
-                       pixelColor[i + j * _texture.Width] = Color.Red;
-                       _couleurText[i, j] = Color.Red;
-
-                   }
-               }
-           }
-            * */
-
-           //TEST//_texture.SetData<Color>(pixelColor);
        }
 
 

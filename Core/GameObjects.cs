@@ -12,46 +12,56 @@ namespace Andy.Core
 {
     public class GameObjects
     {
-        public Sprite sprite;
-        protected float _gravity;
-        protected Vector2 _vitesse;
-        protected float _masse;
-        public World _world;
-        public Collision.Direction _direction;
-        // Rectangle permettant de définir la zone de l'image à afficher
-        public Rectangle _Source;
-        // Durée depuis laquelle l'image est à l'écran
-        public float _time;
-        // Durée de visibilité d'une image
         
-        // Indice de l'image en cours
+        public Sprite sprite;
+        protected Vector2 _vitesse;
+
+        protected float _masse;
+        public Collision.Direction _direction;
+        public Rectangle _Source;
+        public float _time;
+        public bool collisionEnAir=false;
 
 
+        public enum TypeObjet
+        {
+            PLAT = 0,
+            PERS = 1,
+    
+        }
 
-
-
+        public TypeObjet typeobjet;
 
   
 
-        public GameObjects(Sprite s,float m,World world) { 
+        public GameObjects(Sprite s,float m) { 
 
-            sprite = s;
-            _gravity = 9.81f;
+            sprite = s;    
             _vitesse = new Vector2(10, 10);
             _masse = m;
-            this._world = world;
         
         }
         public GameObjects(Sprite s)
         {
             sprite = s;
-            _gravity = 4;
 
         }
 
-        public float getGravity()
+
+        public virtual float getSaut() { return -1; }//Sale peut mieux faire
+        public virtual float getMasse() { return -1; }//idel
+
+
+        public float getVitesseX()
         {
-            return _gravity;
+            return _vitesse.X;
+
+        }
+
+        public float getVitesseY()
+        {
+            return _vitesse.Y;
+
         }
         public void Draw(SpriteBatch spriteBatch)
         {
