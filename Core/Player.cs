@@ -6,62 +6,55 @@ using System.Text;
 using Microsoft.Xna.Framework.Input;
 namespace Andy.Core
 {
-    public class Player : World
+    public class Player : Creature
     {
-        private float _mass;
-        private float _saut;
         private float _hauteurSaut;
         private bool _veutSauter = false;
-        private World _world;
         public Collision.Direction ancienneDirection;
         public Player(Sprite s,World world)
-            : base(s)
+            : base(s,world)
         {
-           _masse = 10;
+           _mass = 0.5f;
             _world = world;
             _direction = Collision.Direction.RIGHT;
             ancienneDirection = Collision.Direction.RIGHT;
             _vitesse.X = 2;
-            _vitesse.Y = 20;
+            _vitesse.Y = 5;
             _saut = 50;
             typeobjet =TypeObjet.PERS;
 
         }
 
 
-        public World getWorld()
-        {
-            return _world;
-        }
+
         public override float getMasse(){
             return _mass;
         }
-        public float getVitesse()
-        {
-            return _vitesse.X;
-        }
+  
 
-        public bool getVeutSauter()
+        public override bool getVeutSauter()
         {
             return _veutSauter;
         }
 
-        public void setVeutSauter(bool b)
-        {
-            _veutSauter = b;
-        }
+  
 
-        public float getHauteurSaut()
+        public override float getHauteurSaut()
         {
             return _hauteurSaut;
         }
 
+        public override void setVeutSauter(bool b){
+            _veutSauter=b;
+
+        }
         public override float getSaut()
         {
             return _saut;
         }
         public void Move(KeyboardState state)
         {
+            
             var keys = state.GetPressedKeys();
 
     
@@ -70,24 +63,25 @@ namespace Andy.Core
             {
 
 
-               
-                if (state.IsKeyDown(Keys.Z))
-                {
-                    if (!inTheAir()||collisionEnAir)
+            
+                    if (state.IsKeyDown(Keys.Z))
                     {
-                        _saut = 2;
-                        _hauteurSaut = sprite.location.Y - 200;
-                        _veutSauter = true;
+                        if (!inTheAir() || collisionEnAir)
+                        {
+                            _saut = 2;
+                            _hauteurSaut = sprite.location.Y - 100;
+                            _veutSauter = true;
 
 
-                    _direction = Collision.Direction.TOP;
-                    sprite.location.Y += _vitesse.X;
+                            _direction = Collision.Direction.TOP;
+                            sprite.location.Y += _vitesse.X;
 
-                        
 
+
+                        }
                     }
 
-                }
+                
                 if (state.IsKeyDown(Keys.Q)/*&&_c_interdite!=Collision.Direction.LEFT*/)
                 {
                     _direction = Collision.Direction.LEFT;

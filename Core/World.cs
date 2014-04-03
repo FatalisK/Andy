@@ -30,7 +30,7 @@ namespace Andy.Core
 
         }
 
-        public virtual void colllisionPlat(World w, List<Vector2> v) { }
+        public virtual void colllisionPlat(World a, List<Vector2> inter) { }
 
         public float getGravity()
         {
@@ -61,10 +61,10 @@ namespace Andy.Core
             return _listeMonde[i];
         }
 
-        public void Physique(Player p)
+        public void Physique(World p)
         {
-            float Poids = p.getMasse() * _gravity;
-            float Accel = Poids; //+ p.getSaut();
+            float Poids = p.getMasse() * p.getGravity();
+            float Accel = Poids + p.getSaut();
             if (_sol == p.sprite.location.Y+p.sprite.getFrameHeight()) { toucheSol = true; } else { toucheSol = false; }
             if (p.getVeutSauter())
             {
@@ -72,15 +72,15 @@ namespace Andy.Core
                 {
                     if (_direction == Collision.Direction.RIGHT)
                     {
-                        sprite.location.X = sprite.location.X + 0.5f * Accel + _vitesse.X;
+                        sprite.location.X = sprite.location.X + 0.5f * Accel + p.getVitesseX();
 
                     }
                     if (_direction == Collision.Direction.LEFT)
                     {
-                        sprite.location.X = sprite.location.X - (_vitesse.X + 0.5f * Accel);
+                        sprite.location.X = sprite.location.X - (p.getVitesseX() + 0.5f * Accel);
 
                     }
-                    sprite.location.Y = sprite.location.Y - (0.5f * Accel + _vitesse.Y);
+                    sprite.location.Y = sprite.location.Y - (0.5f * Accel + p.getVitesseY());
                 }
                 else
                 {
@@ -97,9 +97,12 @@ namespace Andy.Core
 
                 if (p.getSol() != (p.sprite.location.Y + p.sprite.getFrameHeight()))
                 {
-                    if (sprite.location.Y < _sol - p.sprite.getFrameHeight()) { sprite.location.Y = sprite.location.Y + (0.5f * Accel + _vitesse.Y); }
+                   // Console.WriteLine("P" + Poids + "Physique Monde"+(0.5f * Accel + _vitesse.Y));
+
+                    if (sprite.location.Y < _sol - p.sprite.getFrameHeight()) { sprite.location.Y = sprite.location.Y + (0.5f * Accel + p.getVitesseY()); }
 
                     if (sprite.location.Y > _sol - p.sprite.getFrameHeight()) { sprite.location.Y = _sol - p.sprite.getFrameHeight(); }
+
                 }
             }
             

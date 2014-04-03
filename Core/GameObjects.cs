@@ -14,7 +14,7 @@ namespace Andy.Core
     {
         
         public Sprite sprite;
-        protected Vector2 _vitesse;
+
 
         protected float _masse;
         public Collision.Direction _direction;
@@ -37,7 +37,6 @@ namespace Andy.Core
         public GameObjects(Sprite s,float m) { 
 
             sprite = s;    
-            _vitesse = new Vector2(10, 10);
             _masse = m;
         
         }
@@ -49,20 +48,26 @@ namespace Andy.Core
 
 
         public virtual float getSaut() { return -1; }//Sale peut mieux faire
-        public virtual float getMasse() { return -1; }//idel
+        public virtual float getMasse() { return -1; }//idem
 
-
-        public float getVitesseX()
+        public virtual void setVeutSauter(bool b) { }//
+        public virtual bool getVeutSauter()
         {
-            return _vitesse.X;
-
+            return false;
         }
 
-        public float getVitesseY()
-        {
-            return _vitesse.Y;
+        public virtual float getVitesseX() { return -1; }
+        public virtual float getVitesseY() { return -1; }
 
+        public virtual float getHauteurSaut()
+        {
+            return 1;
         }
+
+
+
+
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite.getTexture(), sprite.location, Color.White);

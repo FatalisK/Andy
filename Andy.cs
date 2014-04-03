@@ -25,7 +25,8 @@ namespace Andy
         World world;
         Player player;
         Plateforme p1,p2;
-
+        Ennemies bf;
+        
 
 
 
@@ -48,30 +49,33 @@ namespace Andy
         {
             // TODO: Add your initialization logic here
             Sprite s_world = new Sprite(new Vector2(0, 0),800,600);
-            Sprite s_andy = new Sprite( new Vector2(300, 530),9,70,110,0.1f,new Vector2(0,0));
-            Sprite s_plat = new Sprite(new Vector2(200, 500), 100, 25);
-            Sprite s_plat1 = new Sprite(new Vector2(600, 575), 100, 25);
-
+            Sprite s_andy = new Sprite( new Vector2(0, 530),9,70,110,0.1f,new Vector2(0,0));
+            Sprite s_plat = new Sprite(new Vector2(100, 580), 100, 25);
+            Sprite s_plat1 = new Sprite(new Vector2(500, 580), 100, 25);
+            Sprite s_bf = new Sprite(new Vector2 (300,100),119,121);
 
             s_world.setTexture(Content.Load<Texture2D>("world"));
             s_andy.setTexture(Content.Load<Texture2D>("SuperSprite"));
             s_plat.setTexture(Content.Load<Texture2D>("platforme"));
             s_plat1.setTexture(Content.Load<Texture2D>("platforme"));
+            s_bf.setTexture(Content.Load<Texture2D>("bf"));
 
             s_andy.initCoulour();
             s_plat.initCoulour();
             s_plat1.initCoulour();
+            s_bf.initCoulour();
 
             world = new World(s_world);
-            p1 = new Plateforme(s_plat);
-            p2 = new Plateforme(s_plat1);
+            p1 = new Plateforme(s_plat,new Vector2(100, 580));
+            p2 = new Plateforme(s_plat1,new Vector2(500, 580));
             player = new Player(s_andy, world);
+            bf=new Ennemies(s_bf,world,new Vector2(300,100));
 
 
-      
 
             world.ajouterElem(p1);
             world.ajouterElem(p2);
+            //world.ajouterElem(bf);
 
         
 
@@ -110,9 +114,16 @@ namespace Andy
                 Exit();
 
             // TODO: Add your update logic here
+
+
             Collision.Collided(player, player.getWorld());
+            bf.setCollisions(Collision.Collided(bf, bf.getWorld()));
+
             player.UpdateFrame(gameTime);
             player.Move(Keyboard.GetState());
+            bf.Physique(bf);
+            bf.action();
+            p1.se_deplacer(250, 10);
             player.Physique(player);
             base.Update(gameTime);
         }
@@ -136,6 +147,7 @@ namespace Andy
             player.DrawAnimation(spriteBatch);
             p1.Draw(spriteBatch);
             p2.Draw(spriteBatch);
+            bf.Draw(spriteBatch);
      
             spriteBatch.End();
             base.Draw(gameTime);

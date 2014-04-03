@@ -27,48 +27,31 @@ namespace Andy.Core
             return Color.Aquamarine;
         }
 
-        public static void Collided (World a,World w){
+        public static int Collided (World a,World w){
             int k;
             int i = 0;
             for (k=0;k<w.tailleListe();k++){
-                if (Collided2Obj(a, w.getElem(k))) { i++; }
-            }
-
-            if (i == 0) {
-
-                if(a.getSol() != (a.sprite.location.Y + a.sprite.getFrameHeight())){
-                
-                a.setSol(600);
-
-                }
+                i = i + Collided2Obj(a, w.getElem(k));
                 
             }
+            Console.WriteLine("i" + i);
+            return i;
         }
 
-        public static bool Collided2Obj(World a, World b)
+        public static int Collided2Obj(World a, World b)
         {
- 
             
                 if (a.sprite.Bbox.Intersects(b.sprite.Bbox))
                 {
-                   
- 
-                            IntersectPixels(a, b);
 
-                  
-                }
-                else{
-
-                    return false;
+                    if (IntersectPixels(a, b)) { return 1; }          
                 }
 
-                
-
-            return false;
+            return 0;
 
         }
 
-        public static void IntersectPixels(World a, World b)
+        public static bool IntersectPixels(World a, World b)
         {
             Color colorA = new Color();
             Color colorB = new Color();
@@ -113,6 +96,7 @@ namespace Andy.Core
                         inter.Add(temp);
                         i++;
                         // alors une intersection est trouvé
+                        
 
                     }
                 }
@@ -123,9 +107,10 @@ namespace Andy.Core
             if (b.typeobjet == GameObjects.TypeObjet.PLAT)
             {
                 b.colllisionPlat(a, inter);
-
             }
+            return true;
             }
+            return false;
         }
     }
 
