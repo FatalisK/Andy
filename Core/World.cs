@@ -16,22 +16,32 @@ namespace Andy.Core
         protected float _sol;
         public bool toucheSol;
 
-        private List<World> _listeMonde;
+        private Player _player;
+        private List<Plateforme> _listePlat;
+        private List<Creature> _listeCreat;
         
 
 
 
         public World(Sprite s):base(s)
         {
-            _listeMonde = new List<World>();
+            _listePlat = new List<Plateforme>();
+            _listeCreat = new List<Creature>();
             _sol = 600;
             _gravity = 9.81f;
             toucheSol = true;
 
         }
 
-        public virtual void colllisionPlat(World a, List<Vector2> inter) { }
+        public Player getPlayer()
+        {
+            return _player;
+        }
 
+        public void setPlayer(Player p)
+        {
+            _player = p;
+        }
         public float getGravity()
         {
             return _gravity;
@@ -45,76 +55,109 @@ namespace Andy.Core
         {
             return _sol;
         }
-        public void ajouterElem(World e)
-        {
-            _listeMonde.Add(e);
-   
+
+        /*Acces ListePlat*/
+        public int tailleListPlat(){
+            return _listePlat.Count;
         }
 
-        public int tailleListe()
+        public Plateforme getListPlat(int i)
         {
-            return _listeMonde.Count();
+            return _listePlat[i];
         }
 
+        public void addListPlat(Plateforme p)
+        {
+            _listePlat.Add(p);
+        }
+
+        /*Acces ListeCreature*/
+        public int tailleListCreat()
+        {
+            return _listeCreat.Count;
+        }
+
+        public Creature getListCreat(int i)
+        {
+            return _listeCreat[i];
+        }
+
+        public void addListCreat(Creature c)
+        {
+            _listeCreat.Add(c);
+        }
+
+ 
         public World getElem(int i)
         {
-            return _listeMonde[i];
+            return _listePlat[i];
         }
 
-        public void Physique(World p)
+
+        public void gravite(Creature p)
         {
-            float Poids = p.getMasse() * p.getGravity();
+           
+            float Poids = p.getMasse() * p.getWorld().getGravity();
             float Accel = Poids + p.getSaut();
-            if (_sol == p.sprite.location.Y+p.sprite.getFrameHeight()) { toucheSol = true; } else { toucheSol = false; }
+            //Console.WriteLine("pp" + p.getVeutSauter());
+
             if (p.getVeutSauter())
             {
-                if (sprite.location.Y > p.getHauteurSaut())
+                if (p.sprite.location.Y > p.getHauteurSaut())
                 {
-                    if (_direction == Collision.Direction.RIGHT)
+                    if (p.getDirection() == Direction.RIGHT)
                     {
-                        sprite.location.X = sprite.location.X + 0.5f * Accel + p.getVitesseX();
+                        p.sprite.location.X = p.sprite.location.X + 0.5f * Accel + p.getVitesseX();
 
                     }
-                    if (_direction == Collision.Direction.LEFT)
+                    if (p.getDirection() == Direction.LEFT)
                     {
-                        sprite.location.X = sprite.location.X - (p.getVitesseX() + 0.5f * Accel);
+                        p.sprite.location.X = p.sprite.location.X - (p.getVitesseX() + 0.5f * Accel);
 
                     }
-                    sprite.location.Y = sprite.location.Y - (0.5f * Accel + p.getVitesseY());
+                    p.sprite.location.Y = p.sprite.location.Y - (0.5f * Accel + p.getVitesseY());
                 }
                 else
                 {
                     p.setVeutSauter(false);
                 }
-
-                //_vitesse.X = 0.5f * Accel + _vitesse.X + sprite.location.X;
-                //_vitesse.Y = 0.5f * Accel + _vitesse.Y + sprite.location.Y;
             }
             
             if (!p.getVeutSauter())
             {
                 //Console.WriteLine(p.getSol() + "," + (p.sprite.location.Y + p.sprite.getFrameHeight()));
 
-                if (p.getSol() != (p.sprite.location.Y + p.sprite.getFrameHeight()))
+                if (p.getWorld().getSol() != (p.sprite.location.Y + p.sprite.getFrameHeight()))
                 {
                    // Console.WriteLine("P" + Poids + "Physique Monde"+(0.5f * Accel + _vitesse.Y));
 
-                    if (sprite.location.Y < _sol - p.sprite.getFrameHeight()) { sprite.location.Y = sprite.location.Y + (0.5f * Accel + p.getVitesseY()); }
+                    if (p.sprite.location.Y < _sol - p.sprite.getFrameHeight()) { p.sprite.location.Y = p.sprite.location.Y + (0.5f * Accel + p.getVitesseY()); }
 
-                    if (sprite.location.Y > _sol - p.sprite.getFrameHeight()) { sprite.location.Y = _sol - p.sprite.getFrameHeight(); }
+                    if (p.sprite.location.Y > _sol - p.sprite.getFrameHeight()) { p.sprite.location.Y = _sol - p.sprite.getFrameHeight(); }
 
                 }
             }
             
 
-            if (collisionEnAir)
+            if (p.collisionEnAir)
             {
                 //sprite.location.Y = sprite.location.Y - (0.5f * Accel + _vitesse.Y);
-                collisionEnAir = false;
+                
+                p.collisionEnAir = false;
 
             }
+            Console.WriteLine(p.collisionEnAir);
 
         }
+        
 
-    }
+        public void Physique()
+        {
+           gravite(_player);
+           for (int i = 0; i < _listeCreat.Count; i++)
+           {
+               gravite(_listeCreat[i]);
+           }
+        }
+}
 }

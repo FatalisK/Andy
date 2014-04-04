@@ -9,28 +9,30 @@ namespace Andy.Core
     public class Player : Creature
     {
         private float _hauteurSaut;
-        private bool _veutSauter = false;
-        public Collision.Direction ancienneDirection;
-        public Player(Sprite s,World world)
-            : base(s,world)
+        private bool _veutSauter;
+
+        public Direction ancienneDirection;
+        public Player(Sprite s, World world)
+            : base(s, world)
         {
            _mass = 0.5f;
             _world = world;
-            _direction = Collision.Direction.RIGHT;
-            ancienneDirection = Collision.Direction.RIGHT;
+            _direction = Direction.RIGHT;
+            ancienneDirection = Direction.RIGHT;
             _vitesse.X = 2;
             _vitesse.Y = 5;
             _saut = 50;
             typeobjet =TypeObjet.PERS;
+            collisionEnAir=false;
+            _veutSauter = false;
+
+
 
         }
 
 
 
-        public override float getMasse(){
-            return _mass;
-        }
-  
+
 
         public override bool getVeutSauter()
         {
@@ -48,10 +50,7 @@ namespace Andy.Core
             _veutSauter=b;
 
         }
-        public override float getSaut()
-        {
-            return _saut;
-        }
+
         public void Move(KeyboardState state)
         {
             
@@ -66,6 +65,7 @@ namespace Andy.Core
             
                     if (state.IsKeyDown(Keys.Z))
                     {
+                        Console.WriteLine("inT" + inTheAir() + "cc" + collisionEnAir);
                         if (!inTheAir() || collisionEnAir)
                         {
                             _saut = 2;
@@ -73,7 +73,7 @@ namespace Andy.Core
                             _veutSauter = true;
 
 
-                            _direction = Collision.Direction.TOP;
+                            _direction = Direction.TOP;
                             sprite.location.Y += _vitesse.X;
 
 
@@ -84,7 +84,7 @@ namespace Andy.Core
                 
                 if (state.IsKeyDown(Keys.Q)/*&&_c_interdite!=Collision.Direction.LEFT*/)
                 {
-                    _direction = Collision.Direction.LEFT;
+                    _direction = Direction.LEFT;
                     sprite.location.X -= _vitesse.X;
 
                         
@@ -92,14 +92,14 @@ namespace Andy.Core
                 }
                 if (state.IsKeyDown(Keys.S))
                 {
-                    _direction = Collision.Direction.BOT;
+                    _direction = Direction.BOT;
                     //sprite.location.Y += _vitesse.X;
 
 
                 }
                 if (state.IsKeyDown(Keys.D)/* && _c_interdite!=Collision.Direction.RIGHT*/)
                 {
-                    _direction = Collision.Direction.RIGHT;
+                    _direction = Direction.RIGHT;
 
 
                     sprite.location.X += _vitesse.X;
@@ -110,34 +110,34 @@ namespace Andy.Core
             
             else
             {
-                _direction = Collision.Direction.PASS;
+                _direction = Direction.PASS;
 
             }
 
             switch (_direction)
             {
-                case Collision.Direction.TOP:
+                case Direction.TOP:
                     if (sprite.frameIndex.Y != 2) { sprite.frameIndex.X = 0; }
                     sprite.frameIndex.Y = 2;
 
 
                     break;
-                case Collision.Direction.LEFT:
+                case Direction.LEFT:
                     if (sprite.frameIndex.Y != 1) { sprite.frameIndex.X = 0; }
                     sprite.frameIndex.Y = 1;
 
                     break;
-                case Collision.Direction.BOT:
+                case Direction.BOT:
                     if (sprite.frameIndex.Y != 3) { sprite.frameIndex.X = 0; }
                     sprite.frameIndex.Y = 3;
 
                     break;
-                case Collision.Direction.RIGHT:
+                case Direction.RIGHT:
                     if (sprite.frameIndex.Y != 0) { sprite.frameIndex.X = 0; }
 
                     sprite.frameIndex.Y = 0;
                     break;
-                case Collision.Direction.PASS:
+                case Direction.PASS:
                     if (sprite.frameIndex.Y != 4) { sprite.frameIndex.X = 0; }
 
                     sprite.frameIndex.Y = 4;

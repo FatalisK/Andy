@@ -11,11 +11,11 @@ namespace Andy.Core
     {
         private Vector2 _positionBase; 
         private int _collisions;
-        public Ennemies(Sprite s,World w,Vector2 p_b):
-            base(s,w)
+        public Ennemies(Sprite s, World w,Vector2 p_b):
+            base(s, w)
         {
             _collisions=0;
-            _direction = Collision.Direction.RIGHT;
+            _direction = GameObjects.Direction.RIGHT;
             _vitesse.X =5f;
             _vitesse.Y = 20;
             _saut = 50;
@@ -29,30 +29,27 @@ namespace Andy.Core
 
         public void se_deplacer(int x, int y)
         {
-            if (sprite.location.X > _positionBase.X + x) { _direction = Collision.Direction.LEFT; }
-            if (sprite.location.X <= _positionBase.X) { _direction = Collision.Direction.RIGHT; }
-            Console.WriteLine("c" +_direction);
+            if (sprite.location.X > _positionBase.X + x) { _direction = Direction.LEFT; }
+            if (sprite.location.X <= _positionBase.X) { _direction = Direction.RIGHT; }
+            //Console.WriteLine("c" +_direction);
             if (_collisions > 0)
             {
-                Console.WriteLine("gmmm");
-                if(_direction == Collision.Direction.RIGHT){
-                    Console.WriteLine("gmmm2");
-                    _direction = Collision.Direction.LEFT;
+                if(_direction == Direction.RIGHT){
+                    _direction = Direction.LEFT;
                     _collisions = 0;
                 }
                 else { 
                 
-                    Console.WriteLine("gmmm3");
-                    _direction = Collision.Direction.RIGHT;
+                    _direction =Direction.RIGHT;
                     _collisions = 0;
                 }
 
             }
-            Console.WriteLine(_direction);
+            //Console.WriteLine(_direction);
 
 
-                if (_direction == Collision.Direction.RIGHT) { sprite.location.X = sprite.location.X + _vitesse.X; }
-                if (_direction == Collision.Direction.LEFT) { sprite.location.X = sprite.location.X - _vitesse.X; }
+                if (_direction == Direction.RIGHT) { sprite.location.X = sprite.location.X + _vitesse.X; }
+                if (_direction == Direction.LEFT) { sprite.location.X = sprite.location.X - _vitesse.X; }
 
                 
 
@@ -66,9 +63,6 @@ namespace Andy.Core
             se_deplacer(300, 10);
         }
 
-        public override float getSaut()
-        {
-            return _saut;
-        }
+
     }
 }

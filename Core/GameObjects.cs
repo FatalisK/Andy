@@ -16,30 +16,36 @@ namespace Andy.Core
         public Sprite sprite;
 
 
-        protected float _masse;
-        public Collision.Direction _direction;
+        protected Direction _direction;
         public Rectangle _Source;
         public float _time;
-        public bool collisionEnAir=false;
 
 
         public enum TypeObjet
         {
             PLAT = 0,
             PERS = 1,
+            ENN = 2,
     
         }
 
-        public TypeObjet typeobjet;
+        public enum Direction
+        {
+            NONE = -1,
+            RIGHT = 0,
+            LEFT = 1,
+            BOT = 2,
+            TOP = 3,
+            PASS = 4
+        }
+
+
+
+        protected TypeObjet typeobjet;
 
   
 
-        public GameObjects(Sprite s,float m) { 
 
-            sprite = s;    
-            _masse = m;
-        
-        }
         public GameObjects(Sprite s)
         {
             sprite = s;
@@ -47,22 +53,10 @@ namespace Andy.Core
         }
 
 
-        public virtual float getSaut() { return -1; }//Sale peut mieux faire
-        public virtual float getMasse() { return -1; }//idem
-
-        public virtual void setVeutSauter(bool b) { }//
-        public virtual bool getVeutSauter()
-        {
-            return false;
+        public TypeObjet getTypeObjet(){
+            return typeobjet;
         }
 
-        public virtual float getVitesseX() { return -1; }
-        public virtual float getVitesseY() { return -1; }
-
-        public virtual float getHauteurSaut()
-        {
-            return 1;
-        }
 
 
 

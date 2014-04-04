@@ -69,15 +69,20 @@ namespace Andy
             p1 = new Plateforme(s_plat,new Vector2(100, 580));
             p2 = new Plateforme(s_plat1,new Vector2(500, 580));
             player = new Player(s_andy, world);
-            bf=new Ennemies(s_bf,world,new Vector2(300,100));
+            bf=new Ennemies(s_bf, world,new Vector2(300,100));
 
+            Console.WriteLine("PW" + player.getWorld().getGravity());
+            Console.WriteLine("PE" + bf.getWorld().getGravity());
+            Console.WriteLine("W" + world.getGravity());
 
+            world.addListPlat(p1);
+            world.addListPlat(p2);
+            world.addListCreat(bf);
+            world.setPlayer(player);
+            Console.WriteLine("PW" + player.getWorld().getGravity());
+            Console.WriteLine("PE" + bf.getWorld().getGravity());
+            Console.WriteLine("W" + world.getGravity());
 
-            world.ajouterElem(p1);
-            world.ajouterElem(p2);
-            //world.ajouterElem(bf);
-
-        
 
             base.Initialize();
         }
@@ -121,10 +126,10 @@ namespace Andy
 
             player.UpdateFrame(gameTime);
             player.Move(Keyboard.GetState());
-            bf.Physique(bf);
+
+            world.Physique();
             bf.action();
             p1.se_deplacer(250, 10);
-            player.Physique(player);
             base.Update(gameTime);
         }
 
