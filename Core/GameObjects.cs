@@ -96,31 +96,9 @@ namespace Andy.Core
 
         }
 
+        /*Collision virtual*/
+        public virtual void colllision(GameObjects p, List<Vector2> inter) { }
        
-
-  
-
-            /*
-             * si tu veux être précis alors:
-le vecteur d'accélération A=P+A0 avec P le poids et A0 l'accélération du à autre chose (propulsion, etc...)
-le vecteur vitesse V
-le vecteur D donnant le déplacement pour un incrément de temps t
-
-
-tu initialises:
-D.x,D.y,D.z la position de départ
-V.x,V.y,V.z la vitesse initiale
-et pour chaque cycle:
-tu mets à jour la position:
-D.x=.5*A0.x*t*t+V.x*t+D.x
-D.y=.5*A0.y*t*t+V.y*t+D.y
-D.z=.5*(A0.z-m*g)*t*t+V.z*t+D.y
-PUIS la vitesse:
-V.x=A0.x*t+V.x
-V.y=A0.y*t+V.y
-V.z=(A0.z-m*g)*t+V.z
-            */
-
 
 
   

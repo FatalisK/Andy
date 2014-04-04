@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Input;
 namespace Andy.Core
 {
@@ -25,6 +27,9 @@ namespace Andy.Core
             typeobjet =TypeObjet.PERS;
             collisionEnAir=false;
             _veutSauter = false;
+
+            Poids = getMasse() * getWorld().getGravity();
+            Accel = Poids + getSaut();
 
 
 
@@ -65,7 +70,7 @@ namespace Andy.Core
             
                     if (state.IsKeyDown(Keys.Z))
                     {
-                        Console.WriteLine("inT" + inTheAir() + "cc" + collisionEnAir);
+                        //Console.WriteLine("inT" + inTheAir() + "cc" + collisionEnAir);
                         if (!inTheAir() || collisionEnAir)
                         {
                             _saut = 2;

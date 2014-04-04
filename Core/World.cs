@@ -146,7 +146,6 @@ namespace Andy.Core
                 p.collisionEnAir = false;
 
             }
-            Console.WriteLine(p.collisionEnAir);
 
         }
         
@@ -154,9 +153,11 @@ namespace Andy.Core
         public void Physique()
         {
            gravite(_player);
+           Collision.Collided(_player,-1, _player.getWorld());
            for (int i = 0; i < _listeCreat.Count; i++)
            {
                gravite(_listeCreat[i]);
+               _listeCreat[i].setCollisions(Collision.Collided(_listeCreat[i],i,_listeCreat[i].getWorld()));
            }
         }
 }

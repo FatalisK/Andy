@@ -10,7 +10,6 @@ namespace Andy.Core
     public class Ennemies : Creature
     {
         private Vector2 _positionBase; 
-        private int _collisions;
         public Ennemies(Sprite s, World w,Vector2 p_b):
             base(s, w)
         {
@@ -20,12 +19,14 @@ namespace Andy.Core
             _vitesse.Y = 20;
             _saut = 50;
             _positionBase = p_b;
+            typeobjet = TypeObjet.ENN;
+
+            Poids = getMasse() * getWorld().getGravity();
+            Accel = Poids + getSaut();
         
         }
 
-        public void setCollisions(int c){
-            _collisions=c;
-        }
+
 
         public void se_deplacer(int x, int y)
         {
