@@ -19,6 +19,7 @@ namespace Andy.Core
         private Player _player;
         private List<Plateforme> _listePlat;
         private List<Creature> _listeCreat;
+        private List<Decor> _listeDecor;
         
 
 
@@ -27,7 +28,8 @@ namespace Andy.Core
         {
             _listePlat = new List<Plateforme>();
             _listeCreat = new List<Creature>();
-            _sol = 600;
+            _listeDecor = new List<Decor>();
+            _sol = Andy.WINDOW_HEIGHT;
             _gravity = 9.81f;
             toucheSol = true;
 
@@ -129,11 +131,19 @@ namespace Andy.Core
 
                 if (p.getWorld().getSol() != (p.sprite.location.Y + p.sprite.getFrameHeight()))
                 {
-                   // Console.WriteLine("P" + Poids + "Physique Monde"+(0.5f * Accel + _vitesse.Y));
+            
 
-                    if (p.sprite.location.Y < _sol - p.sprite.getFrameHeight()) { p.sprite.location.Y = p.sprite.location.Y + (0.5f * Accel + p.getVitesseY()); }
+                     p.sprite.location.Y = p.sprite.location.Y + (0.5f * Accel + p.getVitesseY());
 
-                    if (p.sprite.location.Y > _sol - p.sprite.getFrameHeight()) { p.sprite.location.Y = _sol - p.sprite.getFrameHeight(); }
+
+                     if (p.sprite.location.Y > _sol) {           
+                        if (p.getTypeObjet() == GameObjects.TypeObjet.PERS)
+                        {
+                            p.sprite.location.X = 20; p.sprite.location.Y = 0;
+                        }
+                     }
+
+                    //if (p.sprite.location.Y + p.sprite.getFrameHeight() > _sol - p.sprite.getFrameHeight()) { p.sprite.location.Y = 0; p.sprite.location.X = 0; }
 
                 }
             }
@@ -148,7 +158,9 @@ namespace Andy.Core
             }
 
         }
-        
+
+
+ 
 
         public void Physique()
         {
@@ -156,7 +168,7 @@ namespace Andy.Core
            Collision.Collided(_player,-1, _player.getWorld());
            for (int i = 0; i < _listeCreat.Count; i++)
            {
-               gravite(_listeCreat[i]);
+               //gravite(_listeCreat[i]);
                _listeCreat[i].setCollisions(Collision.Collided(_listeCreat[i],i,_listeCreat[i].getWorld()));
            }
         }

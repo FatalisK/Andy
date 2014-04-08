@@ -22,8 +22,8 @@ namespace Andy.Core
             _direction = Direction.RIGHT;
             ancienneDirection = Direction.RIGHT;
             _vitesse.X = 2;
-            _vitesse.Y = 5;
-            _saut = 50;
+            _vitesse.Y = 1;
+            _saut = 5;
             typeobjet =TypeObjet.PERS;
             collisionEnAir=false;
             _veutSauter = false;
@@ -74,7 +74,7 @@ namespace Andy.Core
                         if (!inTheAir() || collisionEnAir)
                         {
                             _saut = 2;
-                            _hauteurSaut = sprite.location.Y - 100;
+                            _hauteurSaut = sprite.location.Y - 50;
                             _veutSauter = true;
 
 

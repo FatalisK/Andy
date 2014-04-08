@@ -16,8 +16,8 @@ namespace Andy.Core
             _collisions=0;
             _direction = GameObjects.Direction.RIGHT;
             _vitesse.X =5f;
-            _vitesse.Y = 20;
-            _saut = 50;
+            _vitesse.Y = 1;
+            _saut = 5;
             _positionBase = p_b;
             typeobjet = TypeObjet.ENN;
 
@@ -28,8 +28,9 @@ namespace Andy.Core
 
 
 
-        public void se_deplacer(int x, int y)
+        public void se_deplacer(int x)
         {
+
             if (sprite.location.X > _positionBase.X + x) { _direction = Direction.LEFT; }
             if (sprite.location.X <= _positionBase.X) { _direction = Direction.RIGHT; }
             //Console.WriteLine("c" +_direction);
@@ -61,7 +62,11 @@ namespace Andy.Core
         public void action()
         {
             //Console.WriteLine("c" + collision);
-            se_deplacer(300, 10);
+            se_deplacer(100);
+    
+
+
+            
         }
 
 

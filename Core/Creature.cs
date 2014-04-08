@@ -26,10 +26,7 @@ namespace Andy.Core
 
         }
 
-        public Direction getDirection()
-        {
-            return _direction;
-        }
+
 
         public virtual float getVitesseX()
         {
@@ -75,7 +72,6 @@ namespace Andy.Core
             int margeErY = 4;
 
             int[] tabCollision = new int[4];//0 gauche 1 droite 2 haut 3 bas
-            //Console.WriteLine("Je me suis fait intersecté par un objet de type" + a.typeobjet);
 
             //if (a.typeobjet == GameObjects.TypeObjet.PERS)//Collision avec une personne
             //{
@@ -145,20 +141,22 @@ namespace Andy.Core
 
             if (max == 1)
             {
-                Console.WriteLine("minX" + inter[maxX].X + "R" + sprite.Bbox.Left + "T" + getTypeObjet());
+                //Console.WriteLine("minX" + inter[maxX].X + "R" + sprite.Bbox.Left + "T" + getTypeObjet());
 
                 sprite.location.X = sprite.location.X + getVitesseX();
-                if (inter[minX].X < p.sprite.Bbox.Right)//Il est dedans la boite il faut l'ejecter !
-                {
-                    sprite.location.X = sprite.location.X + (p.sprite.Bbox.Right - inter[minX].X);
-                }
+
+                
+                    if (inter[minX].X < p.sprite.Bbox.Right)//Il est dedans la boite il faut l'ejecter !
+                    {
+                        sprite.location.X = sprite.location.X + (p.sprite.Bbox.Right - inter[minX].X);
+                    }
+                
             }
 
             //Se cogne à gauche
 
             if (max == 0)
             {
-
                 //Console.WriteLine("assss");
                 //Console.WriteLine("minX" + inter[maxX].X + "R" + sprite.Bbox.Left + "T" + getTypeObjet());
                 sprite.location.X = sprite.location.X - getVitesseX();
@@ -181,6 +179,17 @@ namespace Andy.Core
                 {
                     sprite.location.Y = sprite.location.Y - (inter[minY].Y - p.sprite.Bbox.Top);
                 }
+
+                //TODO QUAND LA PLATOFORME BOUGE RESTER DESSUS
+                if (p.getTypeObjet() == GameObjects.TypeObjet.PLAT)
+                {
+
+                    if (_direction == GameObjects.Direction.PASS)
+                    {
+                        if (p.getDirection() == Direction.RIGHT) { sprite.location.X = sprite.location.X + p.getPVitesseX();}
+                        if (p.getDirection() == Direction.LEFT) { sprite.location.X = sprite.location.X - p.getPVitesseX(); }
+                    }
+                }
             }
 
             //se cogne en bas
@@ -193,7 +202,19 @@ namespace Andy.Core
 
 
             //}
+        }
+
+        public bool inTheAir()
+        {
+
+            if (sprite.location.Y + sprite.getFrameHeight() > Andy.WINDOW_HEIGHT)//Desactive le saut si on tombe en dessous de l'cran
+            {
+                return true;
+            } 
+
+            return (sprite.location.Y + sprite.getFrameHeight() < Andy.WINDOW_HEIGHT);
         }      
+
 
     }
 }

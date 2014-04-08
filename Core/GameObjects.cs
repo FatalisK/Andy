@@ -14,11 +14,10 @@ namespace Andy.Core
     {
         
         public Sprite sprite;
-
-
         protected Direction _direction;
         public Rectangle _Source;
         public float _time;
+
 
 
         public enum TypeObjet
@@ -53,11 +52,23 @@ namespace Andy.Core
         }
 
 
+
+
         public TypeObjet getTypeObjet(){
             return typeobjet;
         }
 
 
+        public GameObjects.Direction getDirection()
+        {
+            return _direction;
+        }
+
+        public virtual float getPVitesseX() //A E?LEVER D4ICI
+        {
+            return 0;
+
+        }
 
 
 
@@ -102,9 +113,6 @@ namespace Andy.Core
 
 
   
-        public bool inTheAir()
-        {
-            return (sprite.location.Y < 490);
-        }
+
     }
 }
