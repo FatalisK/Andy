@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ScreenManager>
+  <Image>
+    <path>Images/Image2</path>
+    <effects>FadeEffect</effects>
+    <isActivate>true</isActivate>
+  </Image>
+</ScreenManager>

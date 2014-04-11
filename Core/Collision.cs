@@ -56,9 +56,12 @@ namespace Andy.Core
             
                 if (a.sprite.Bbox.Intersects(b.sprite.Bbox))
                 {
+                    //Console.WriteLine("a" + a.sprite.Bbox.Bottom + "b" + b.sprite.Bbox.Top);
+
+                    
                     if (IntersectPixels(a, b))
                     {
-                        //Console.WriteLine("a" + a.getTypeObjet() + "b" + b.getTypeObjet());
+                        //Console.WriteLine("a" + a.sprite.Bbox.Bottom + "b" + b.sprite.Bbox.Top);
                         return 1;
                     }          
                 }
@@ -108,9 +111,36 @@ namespace Andy.Core
                     // Si les 2 pixels ne snot pas cmoplètement transparent, 
                     if (colorA.A!=0 && colorB.A!=0)
                     {
+                        if (a.getTypeObjet() == GameObjects.TypeObjet.PERS && b.getTypeObjet() == GameObjects.TypeObjet.ENN)
+                        {
+                            if (a.getDirection() == GameObjects.Direction.TAPER)
+                            {
+                                //p x, q y
+                                
+                                if (a.regard == GameObjects.Direction.RIGHT)
+                                {
+                                    //Console.WriteLine("p" + p + "q" + q);
+                                    if (p > a.getPosArmeR().W && p < a.getPosArmeR().X && q > a.getPosArmeR().Y && q < a.getPosArmeR().Z)
+                                    {
+                                        b.prendreDegat(a.getReculArme().X, a.getReculArme().Y);
+
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    if (p > a.getPosArmeL().W && p < a.getPosArmeL().X && q > a.getPosArmeL().Y && q < a.getPosArmeL().Z)
+                                    {
+                                        b.prendreDegat(a.getReculArme().X, -a.getReculArme().Y);
+                                        //Console.WriteLine("L" + a.getReculArme());
+                                    }
+                                }
+                            }
+                        }
                         temp.X=x;
                         temp.Y=y;
-                        //Console.WriteLine(x +" , "+ y);
+                        //Console.WriteLine(x +" , "+ y +"yb"+b.sprite.location.Y);
                         inter.Add(temp);
                         i++;
                         // alors une intersection est trouvé

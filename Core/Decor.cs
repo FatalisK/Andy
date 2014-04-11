@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Andy.Core
 {
@@ -26,10 +29,12 @@ namespace Andy.Core
         public void bouger()
         {
             sprite.location.X = sprite.location.X + mouvementX;
-            if (sprite.location.X > Andy.WINDOW_WIDTH + sprite.getFrameWidth())
+            if (sprite.location.X > MenuPrincipal.WINDOW_WIDTH + sprite.getFrameWidth())
             {
                 sprite.location.X = 0-sprite.getFrameWidth();
             }
         }
     }
+
+
 }

@@ -17,6 +17,8 @@ namespace Andy.Core
         protected Direction _direction;
         public Rectangle _Source;
         public float _time;
+        public GameObjects.Direction regard;
+
 
 
 
@@ -35,7 +37,8 @@ namespace Andy.Core
             LEFT = 1,
             BOT = 2,
             TOP = 3,
-            PASS = 4
+            PASS = 4,
+            TAPER=5
         }
 
 
@@ -70,8 +73,24 @@ namespace Andy.Core
 
         }
 
+        public virtual void setDegatRecul(Vector2 s)
+        {
+  
+        }
 
+        public virtual Vector2 getReculArme(){
+            return new Vector2(0,0);
+        }
+        public virtual Vector4 getPosArmeR()
+        {
+            return new Vector4(0, 0, 0, 0);
+        }
+        public virtual Vector4 getPosArmeL()
+        {
+            return new Vector4(0, 0,0,0);
+        }
 
+        public virtual void prendreDegat(float a, float b){}
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -84,29 +103,7 @@ namespace Andy.Core
             spriteBatch.Draw(sprite.getTexture(), sprite.location, _Source, Color.White);
         }
 
-        public void UpdateFrame(GameTime gameTime)
-        {
-            _time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            while (_time > sprite.getFrameTime())
-            {
-                sprite.frameIndex.X++;
-                _time = 0f;
-            }
-            if (sprite.frameIndex.X > sprite.getTotalFrame()) 
-                sprite.frameIndex.X = 0;
-
-
-            _Source = new Rectangle(
-                (int)(sprite.frameIndex.X * sprite.getFrameWidth()),
-               (int)(sprite.frameIndex.Y * sprite.getFrameHeight()),
-                sprite.getFrameWidth(),
-                sprite.getFrameHeight());
-
-            
-
-        }
-
+        
         /*Collision virtual*/
         public virtual void colllision(GameObjects p, List<Vector2> inter) { }
        

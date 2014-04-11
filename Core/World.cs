@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 
 
@@ -29,7 +29,7 @@ namespace Andy.Core
             _listePlat = new List<Plateforme>();
             _listeCreat = new List<Creature>();
             _listeDecor = new List<Decor>();
-            _sol = Andy.WINDOW_HEIGHT;
+            _sol = MenuPrincipal.WINDOW_HEIGHT;
             _gravity = 9.81f;
             toucheSol = true;
 
@@ -98,9 +98,7 @@ namespace Andy.Core
 
         public void gravite(Creature p)
         {
-           
-            float Poids = p.getMasse() * p.getWorld().getGravity();
-            float Accel = Poids + p.getSaut();
+
             //Console.WriteLine("pp" + p.getVeutSauter());
 
             if (p.getVeutSauter())
@@ -109,15 +107,15 @@ namespace Andy.Core
                 {
                     if (p.getDirection() == Direction.RIGHT)
                     {
-                        p.sprite.location.X = p.sprite.location.X + 0.5f * Accel + p.getVitesseX();
+                        p.sprite.location.X = p.sprite.location.X + 0.5f * p.Accel + p.getVitesseX();
 
                     }
                     if (p.getDirection() == Direction.LEFT)
                     {
-                        p.sprite.location.X = p.sprite.location.X - (p.getVitesseX() + 0.5f * Accel);
+                        p.sprite.location.X = p.sprite.location.X - (p.getVitesseX() + 0.5f * p.Accel);
 
                     }
-                    p.sprite.location.Y = p.sprite.location.Y - (0.5f * Accel + p.getVitesseY());
+                    p.sprite.location.Y = p.sprite.location.Y - (0.5f * p.Accel + p.getVitesseY());
                 }
                 else
                 {
@@ -133,13 +131,14 @@ namespace Andy.Core
                 {
             
 
-                     p.sprite.location.Y = p.sprite.location.Y + (0.5f * Accel + p.getVitesseY());
+                     p.sprite.location.Y = p.sprite.location.Y + p.Poids;
 
 
                      if (p.sprite.location.Y > _sol) {           
                         if (p.getTypeObjet() == GameObjects.TypeObjet.PERS)
                         {
                             p.sprite.location.X = 20; p.sprite.location.Y = 0;
+                            p.setPvActuel(p.getPvActuel()-1);//La mort
                         }
                      }
 
@@ -156,7 +155,7 @@ namespace Andy.Core
                 p.collisionEnAir = false;
 
             }
-
+            
         }
 
 
@@ -164,12 +163,15 @@ namespace Andy.Core
 
         public void Physique()
         {
+            Collision.Collided(_player, -1, _player.getWorld());//Pourquoi ca marche pas  ici et ca marches dans world ?
+            _player.Move(Keyboard.GetState());
            gravite(_player);
-           Collision.Collided(_player,-1, _player.getWorld());
            for (int i = 0; i < _listeCreat.Count; i++)
            {
                //gravite(_listeCreat[i]);
+
                _listeCreat[i].setCollisions(Collision.Collided(_listeCreat[i],i,_listeCreat[i].getWorld()));
+               _listeCreat[i].updateCrea();
            }
         }
 }

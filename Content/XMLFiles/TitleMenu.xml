@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Menu>
+  <axis>Y</axis>
+  <effects>FadeEffects</effects>
+  <isActivate>true</isActivate>
+  <item>
+    <image>
+      <text>New Game</text>
+    </image>
+  </item>
+
+  <item>
+    <image>
+      <text>Options</text>
+    </image>
+  </item>
+  
+  <item>
+    <image>
+      <text>Credits</text>
+    </image>
+  </item>
+  
+  <item>
+    <image>
+      <text>Quit</text>
+    </image>
+  </item>
+  
+</Menu>

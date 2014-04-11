@@ -18,7 +18,7 @@ namespace Andy
         [STAThread]
         static void Main()
         {
-            using (var game = new Andy())
+            using (var game = new MenuPrincipal())
                 game.Run();
         }
     }

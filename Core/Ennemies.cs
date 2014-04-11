@@ -11,7 +11,7 @@ namespace Andy.Core
     {
         private Vector2 _positionBase; 
         public Ennemies(Sprite s, World w,Vector2 p_b):
-            base(s, w)
+            base(s, w,3)
         {
             _collisions=0;
             _direction = GameObjects.Direction.RIGHT;
@@ -61,6 +61,19 @@ namespace Andy.Core
 
         public void action()
         {
+            //Console.WriteLine("DegR" + _degatRecul);
+            
+            if (_degatRecul.X != 0) {
+                sprite.location.X = sprite.location.X + _degatRecul.Y;
+                if (_degatRecul.X > 0)
+                {
+                    _degatRecul.X--;
+                }
+                else
+                {
+                    _degatRecul.X++;
+                }
+            }
             //Console.WriteLine("c" + collision);
             se_deplacer(100);
     
