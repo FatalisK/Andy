@@ -23,6 +23,8 @@ namespace Andy.Core
 
             Poids = getMasse() * getWorld().getGravity();
             Accel = Poids + getSaut();
+            _reculArme.X = 10;
+            _reculArme.Y = 10;
         
         }
 

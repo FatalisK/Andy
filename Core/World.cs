@@ -138,7 +138,8 @@ namespace Andy.Core
                         if (p.getTypeObjet() == GameObjects.TypeObjet.PERS)
                         {
                             p.sprite.location.X = 20; p.sprite.location.Y = 0;
-                            p.setPvActuel(p.getPvActuel()-1);//La mort
+                            p.setPvActuel(p.getPvActuel()-1);
+                            p.setMort(true);//La mort
                         }
                      }
 
@@ -165,7 +166,9 @@ namespace Andy.Core
         {
             Collision.Collided(_player, -1, _player.getWorld());//Pourquoi ca marche pas  ici et ca marches dans world ?
             _player.Move(Keyboard.GetState());
+            _player.updatePlayer();
            gravite(_player);
+
            for (int i = 0; i < _listeCreat.Count; i++)
            {
                //gravite(_listeCreat[i]);

@@ -111,12 +111,14 @@ namespace Andy.Core
                     // Si les 2 pixels ne snot pas cmoplètement transparent, 
                     if (colorA.A!=0 && colorB.A!=0)
                     {
+                        //Le personnage attaque un ennemie
                         if (a.getTypeObjet() == GameObjects.TypeObjet.PERS && b.getTypeObjet() == GameObjects.TypeObjet.ENN)
                         {
+
                             if (a.getDirection() == GameObjects.Direction.TAPER)
                             {
                                 //p x, q y
-                                
+
                                 if (a.regard == GameObjects.Direction.RIGHT)
                                 {
                                     //Console.WriteLine("p" + p + "q" + q);
@@ -137,7 +139,15 @@ namespace Andy.Core
                                     }
                                 }
                             }
+                            else
+                            {//Il colisine un ennemie sans taper 
+
+
+                                a.prendreDegat(b.getReculArme().X, b.getReculArme().Y);
+                            }
+
                         }
+
                         temp.X=x;
                         temp.Y=y;
                         //Console.WriteLine(x +" , "+ y +"yb"+b.sprite.location.Y);

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DeathScreen>
+  <image>
+    <path>Images/Image1</path>
+  </image>
+  <axis>Y</axis>
+  <effects>FadeEffects</effects>
+  <isActivate>true</isActivate>
+  <item>
+    <image>
+      <text>Recommencer</text>
+    </image>
+  </item>
+
+  <item>
+    <image>
+      <text>Quitter</text>
+    </image>
+  </item>
+
+</DeathScreen>

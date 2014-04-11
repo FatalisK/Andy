@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Andy.ScreenCore;
 namespace Andy.Core
 {
     public class Player : Creature
@@ -180,6 +181,26 @@ namespace Andy.Core
                 getSpriteVie().location.X = 20 + i * 40;
 
                 spriteBatch.Draw(getSpriteVie().getTexture(), getSpriteVie().location, Color.White);
+            }
+
+        }
+
+        public void updatePlayer(){
+            Console.WriteLine("CC" + _invincible + "cpt"+_compteurTempsInv+"Ct"+_temps_invincible);
+            if (_invincible == true)
+            {
+                _compteurTempsInv++;
+                if (_compteurTempsInv == _temps_invincible)
+                {
+                    _invincible = false;
+                    _compteurTempsInv = 0;
+                }
+            }
+            if (_estMort)
+            {
+                Console.WriteLine("La mort par la tche tche");
+                ScreenManager.Instance.ChangeScreens("TitleScreen");
+
             }
 
         }

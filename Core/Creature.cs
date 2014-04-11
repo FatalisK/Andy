@@ -21,6 +21,7 @@ namespace Andy.Core
         protected int _pvTotal;
         protected int _pvActuel;
         protected Sprite _s_vie;
+        protected bool _estMort;
 
 
         protected Vector2 _reculArme;//X=Le temps du recul Y=La valeur dont on recul à chaque update
@@ -44,7 +45,7 @@ namespace Andy.Core
             _pvActuel = _pvTotal;
             _degatRecul.X = 0;
             _invincible = false;
-            _temps_invincible = 25;
+            _temps_invincible = 25;//ms
             _compteurTempsInv = 0;
 
 
@@ -375,6 +376,10 @@ namespace Andy.Core
 
         }
 
+        public void setMort(bool b)
+        {
+            _estMort = b;
+        }
         public bool inTheAir()
         {
 

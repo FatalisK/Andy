@@ -52,6 +52,7 @@
     <Compile Include="LancerJeu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScreenCore\DeathScreen.cs" />
     <Compile Include="ScreenCore\FadeEffect.cs" />
     <Compile Include="ScreenCore\GameScreen.cs" />
     <Compile Include="ScreenCore\Image.cs" />
@@ -103,6 +104,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Ciel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\XMLFiles\DeathMenu.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\droiteM.png">
