@@ -5,7 +5,7 @@ using System.Text;
 
 
 using Microsoft.Xna.Framework;
-
+using Microsoft.Xna.Framework.Graphics;
 namespace Andy.Core
 {
     public class Creature :GameObjects
@@ -22,6 +22,7 @@ namespace Andy.Core
         protected int _pvActuel;
         protected Sprite _s_vie;
         protected bool _estMort;
+
 
 
         protected Vector2 _reculArme;//X=Le temps du recul Y=La valeur dont on recul à chaque update
@@ -47,6 +48,7 @@ namespace Andy.Core
             _invincible = false;
             _temps_invincible = 25;//ms
             _compteurTempsInv = 0;
+            _mass = 0.1f;
 
 
         }
@@ -249,8 +251,10 @@ namespace Andy.Core
                     {
                         if (p.getDirection() == Direction.RIGHT) { sprite.location.X = sprite.location.X + p.getPVitesseX();}
                         if (p.getDirection() == Direction.LEFT) { sprite.location.X = sprite.location.X - p.getPVitesseX(); }
-                    }
 
+                    }
+                    if (p.getDirection() == Direction.TOP) { sprite.location.Y = sprite.location.Y - p.getPVitesseY(); }
+                    if (p.getDirection() == Direction.BOT) { sprite.location.Y = sprite.location.Y + p.getPVitesseY(); }
 
                 }
             }
@@ -355,17 +359,46 @@ namespace Andy.Core
 
                     }
 
-                    while (_time > sprite.getFrameTime())
-                    {
-                        sprite.frameIndex.X++;
-                        _time = 0f;
-                    }
-                    if (sprite.frameIndex.X > sprite.getTotalFrame())
-                        sprite.frameIndex.X = 0;
 
 
                 }
             }
+
+            if (typeobjet == TypeObjet.ENN)
+            {
+                //Console.WriteLine("babouin"+sprite.frameIndex.X+"//"+sprite.frameIndex.Y+"//"+_direction);
+                switch (_direction)
+                {
+
+                    case Direction.LEFT:
+                        if (sprite.frameIndex.Y != 1) { sprite.frameIndex.X = 0; }
+                        sprite.frameIndex.Y = 1;
+
+                        break;
+
+                    case Direction.RIGHT:
+                        if (sprite.frameIndex.Y != 0) { sprite.frameIndex.X = 0; }
+
+                        sprite.frameIndex.Y = 0;
+                        break;
+
+
+
+
+                }
+
+
+            }
+
+
+            while (_time > sprite.getFrameTime())
+            {
+                sprite.frameIndex.X++;
+                _time = 0f;
+            }
+            if (sprite.frameIndex.X > sprite.getTotalFrame())
+                sprite.frameIndex.X = 0;
+
             _Source = new Rectangle(
                 (int)(sprite.frameIndex.X * sprite.getFrameWidth()),
                (int)(sprite.frameIndex.Y * sprite.getFrameHeight()),
@@ -390,6 +423,8 @@ namespace Andy.Core
 
             return (sprite.location.Y + sprite.getFrameHeight() < MenuPrincipal.WINDOW_HEIGHT);
         }
+
+  
 
         public void updateCrea()
         {

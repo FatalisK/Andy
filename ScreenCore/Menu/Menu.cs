@@ -88,6 +88,7 @@ namespace Andy.ScreenCore.Menu
 
         public void Update(GameTime gameTime)
         {
+
             if (itemNumber == 0 && InputManager.Instance.KeyPressed(Keys.Enter))
             {
                 if (InputManager.Instance.KeyPressed(Keys.Space, Keys.Enter))

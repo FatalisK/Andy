@@ -56,7 +56,7 @@ namespace Andy.Core
             
                 if (a.sprite.Bbox.Intersects(b.sprite.Bbox))
                 {
-                    //Console.WriteLine("a" + a.sprite.Bbox.Bottom + "b" + b.sprite.Bbox.Top);
+                    //Console.WriteLine("a" + b.sprite.Bbox.Right + "b" + b.sprite.Bbox.Left);
 
                     
                     if (IntersectPixels(a, b))

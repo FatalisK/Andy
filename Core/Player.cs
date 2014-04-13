@@ -100,7 +100,7 @@ namespace Andy.Core
                     {
                         //Console.WriteLine("inT" + inTheAir() + "cc" + collisionEnAir);
 
-                        if (inTheAir() || collisionEnAir)
+                        if (!inTheAir() || collisionEnAir)
                         {
 
                             _hauteurSaut = sprite.location.Y - _hateurSautAbs;
@@ -175,18 +175,23 @@ namespace Andy.Core
 
         public  void DrawPlayer(SpriteBatch spriteBatch)
         {
-            DrawAnimation(spriteBatch);
-            for (int i = 0; i < _pvActuel; i++)
+            if (!_estMort)
             {
-                getSpriteVie().location.X = 20 + i * 40;
+                DrawAnimation(spriteBatch);
+                particleEngine.Draw(spriteBatch);
 
-                spriteBatch.Draw(getSpriteVie().getTexture(), getSpriteVie().location, Color.White);
-            }
+                for (int i = 0; i < _pvActuel; i++)
+                {
+                    getSpriteVie().location.X = 20 + i * 40;
+
+                    spriteBatch.Draw(getSpriteVie().getTexture(), getSpriteVie().location, Color.White);
+                }
+        }
 
         }
 
         public void updatePlayer(){
-            Console.WriteLine("CC" + _invincible + "cpt"+_compteurTempsInv+"Ct"+_temps_invincible);
+            //Console.WriteLine("CC" + _invincible + "cpt"+_compteurTempsInv+"Ct"+_temps_invincible);
             if (_invincible == true)
             {
                 _compteurTempsInv++;
@@ -196,9 +201,10 @@ namespace Andy.Core
                     _compteurTempsInv = 0;
                 }
             }
+            if (_pvActuel == 0) { _estMort = true; }
             if (_estMort)
             {
-                Console.WriteLine("La mort par la tche tche");
+                //Console.WriteLine("La mort par la tche tche");
                 ScreenManager.Instance.ChangeScreens("TitleScreen");
 
             }

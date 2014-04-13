@@ -73,6 +73,11 @@ namespace Andy.Core
 
         }
 
+        public virtual float getPVitesseY() //A E?LEVER D4ICI
+        {
+            return 0;
+
+        }
         public virtual void setDegatRecul(Vector2 s)
         {
   

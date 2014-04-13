@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Andy.Core
 {
@@ -15,7 +16,7 @@ namespace Andy.Core
         {
             _collisions=0;
             _direction = GameObjects.Direction.RIGHT;
-            _vitesse.X =5f;
+            _vitesse.X =0.5f;
             _vitesse.Y = 1;
             _saut = 5;
             _positionBase = p_b;
@@ -49,7 +50,7 @@ namespace Andy.Core
                 }
 
             }
-            //Console.WriteLine(_direction);
+            //Console.WriteLine("T" + sprite.Bbox.Top + "B" + sprite.Bbox.Bottom + "R" + sprite.Bbox.Right + "L" + sprite.Bbox.Left );
 
 
                 if (_direction == Direction.RIGHT) { sprite.location.X = sprite.location.X + _vitesse.X; }
@@ -82,6 +83,16 @@ namespace Andy.Core
 
 
             
+        }
+
+        public void DrawEnnemie(SpriteBatch spriteBatch)
+        {
+            if (!_estMort)
+            {
+                DrawAnimation(spriteBatch);
+
+            }
+
         }
 
 

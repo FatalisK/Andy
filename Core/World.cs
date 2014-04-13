@@ -100,54 +100,70 @@ namespace Andy.Core
         {
 
             //Console.WriteLine("pp" + p.getVeutSauter());
-
-            if (p.getVeutSauter())
-            {
-                if (p.sprite.location.Y > p.getHauteurSaut())
+            if(p.getTypeObjet()==TypeObjet.PERS)
+            { 
+                if (p.getVeutSauter())
                 {
-                    if (p.getDirection() == Direction.RIGHT)
+                    if (p.sprite.location.Y > p.getHauteurSaut())
                     {
-                        p.sprite.location.X = p.sprite.location.X + 0.5f * p.Accel + p.getVitesseX();
-
-                    }
-                    if (p.getDirection() == Direction.LEFT)
-                    {
-                        p.sprite.location.X = p.sprite.location.X - (p.getVitesseX() + 0.5f * p.Accel);
-
-                    }
-                    p.sprite.location.Y = p.sprite.location.Y - (0.5f * p.Accel + p.getVitesseY());
-                }
-                else
-                {
-                    p.setVeutSauter(false);
-                }
-            }
-            
-            if (!p.getVeutSauter())
-            {
-                //Console.WriteLine(p.getSol() + "," + (p.sprite.location.Y + p.sprite.getFrameHeight()));
-
-                if (p.getWorld().getSol() != (p.sprite.location.Y + p.sprite.getFrameHeight()))
-                {
-            
-
-                     p.sprite.location.Y = p.sprite.location.Y + p.Poids;
-
-
-                     if (p.sprite.location.Y > _sol) {           
-                        if (p.getTypeObjet() == GameObjects.TypeObjet.PERS)
+                        if (p.getDirection() == Direction.RIGHT)
                         {
-                            p.sprite.location.X = 20; p.sprite.location.Y = 0;
-                            p.setPvActuel(p.getPvActuel()-1);
-                            p.setMort(true);//La mort
+                            p.sprite.location.X = p.sprite.location.X + 0.5f * p.Accel + p.getVitesseX();
+
                         }
-                     }
+                        if (p.getDirection() == Direction.LEFT)
+                        {
+                            p.sprite.location.X = p.sprite.location.X - (p.getVitesseX() + 0.5f * p.Accel);
 
-                    //if (p.sprite.location.Y + p.sprite.getFrameHeight() > _sol - p.sprite.getFrameHeight()) { p.sprite.location.Y = 0; p.sprite.location.X = 0; }
-
+                        }
+                        p.sprite.location.Y = p.sprite.location.Y - (0.5f * p.Accel + p.getVitesseY());
+                    }
+                    else
+                    {
+                        p.setVeutSauter(false);
+                    }
                 }
+
+                if (!p.getVeutSauter())
+                {
+                    //Console.WriteLine(p.getSol() + "," + (p.sprite.location.Y + p.sprite.getFrameHeight()));
+
+                    if (p.getWorld().getSol() != (p.sprite.location.Y + p.sprite.getFrameHeight()))
+                    {
+
+
+                        p.sprite.location.Y = p.sprite.location.Y + p.Poids;
+
+
+                        if (p.sprite.location.Y > _sol)
+                        {
+                            if (p.getTypeObjet() == GameObjects.TypeObjet.PERS)
+                            {
+                                p.sprite.location.X = 0; p.sprite.location.Y = 400;
+                                p.setPvActuel(p.getPvActuel() - 1);
+                                //p.setPvActuel(0);//La mort
+                            }
+                        }
+
+                        //if (p.sprite.location.Y + p.sprite.getFrameHeight() > _sol - p.sprite.getFrameHeight()) { p.sprite.location.Y = 0; p.sprite.location.X = 0; }
+
+                    }
+                }
+
             }
-            
+            else
+            {
+
+
+
+                p.sprite.location.Y = p.sprite.location.Y + p.Poids;
+
+                Console.WriteLine("ici" + p.Poids);
+                //if (p.sprite.location.Y + p.sprite.getFrameHeight() > _sol - p.sprite.getFrameHeight()) { p.sprite.location.Y = 0; p.sprite.location.X = 0; }
+
+
+
+            }
 
             if (p.collisionEnAir)
             {
@@ -162,9 +178,9 @@ namespace Andy.Core
 
  
 
-        public void Physique()
+        public void leMondeEve()
         {
-            Collision.Collided(_player, -1, _player.getWorld());//Pourquoi ca marche pas  ici et ca marches dans world ?
+            Collision.Collided(_player, -1, _player.getWorld());
             _player.Move(Keyboard.GetState());
             _player.updatePlayer();
            gravite(_player);
@@ -175,6 +191,11 @@ namespace Andy.Core
 
                _listeCreat[i].setCollisions(Collision.Collided(_listeCreat[i],i,_listeCreat[i].getWorld()));
                _listeCreat[i].updateCrea();
+               if (_listeCreat[i].getPvActuel() == 0)
+               {
+                   _listeCreat[i].setMort(true);
+                   _listeCreat.RemoveAt(i);
+               }
            }
         }
 }
