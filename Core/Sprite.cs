@@ -29,6 +29,8 @@ namespace Andy.Core
             location = position;
             _frameWidth = frameWidth;
             _frameHeight = frameHeight;
+            frameIndex.X = 0;
+            frameIndex.Y = 0;
     
 
         }

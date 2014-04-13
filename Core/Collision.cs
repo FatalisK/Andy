@@ -89,6 +89,8 @@ namespace Andy.Core
             int i=0;
             int p = 0;
             int q = 0;
+            int empY=0;
+            int empX = 0;
             int x = left;
             int y=top;
 
@@ -96,17 +98,20 @@ namespace Andy.Core
             for ( y = top; y < bottom; y++)
             {
                 q = (int)a.sprite.frameIndex.Y * a.sprite.getFrameHeight() + (y-a.sprite.Bbox.Top);
-
-
+                empY = (int)b.sprite.frameIndex.Y * b.sprite.getFrameHeight() + (y - b.sprite.Bbox.Top);
+             
+                
                 for ( x = left; x < right; x++)
                 {
      
 
                     p = (int)a.sprite.frameIndex.X * a.sprite.getFrameWidth()+(x-a.sprite.Bbox.Left);
+                    empX = (int)b.sprite.frameIndex.X * b.sprite.getFrameWidth() + (x - b.sprite.Bbox.Left);
 
                     colorA = a.sprite.pixelColor[p + q * a.sprite.getTexture().Width];
-                    colorB = b.sprite.pixelColor[(x - b.sprite.Bbox.Left) +
-                                         (y - b.sprite.Bbox.Top) * b.sprite.Bbox.Width];
+
+
+                    colorB = b.sprite.pixelColor[empX + empY * b.sprite.getTexture().Width];
 
                     // Si les 2 pixels ne snot pas cmoplètement transparent, 
                     if (colorA.A!=0 && colorB.A!=0)
