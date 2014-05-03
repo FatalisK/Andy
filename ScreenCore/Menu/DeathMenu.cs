@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Andy.ScreenCore.Menu
 {
-    public class Menu
+    public class DeathMenu
     {
         public event EventHandler OnMenuChange;
 
@@ -33,7 +33,7 @@ namespace Andy.ScreenCore.Menu
             }
         }
 
-        public Menu()
+        public DeathMenu()
         {
             id = effects = String.Empty;
             itemNumber = 0;
@@ -90,27 +90,14 @@ namespace Andy.ScreenCore.Menu
         {
 
             if (itemNumber == 0 && InputManager.Instance.KeyPressed(Keys.Enter)
-                || itemNumber == 0 && GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed
-                || itemNumber == 0 && GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
+                || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
             {
                 if (InputManager.Instance.KeyPressed(Keys.Enter)
-                || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed
-                || GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
+                || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
                     ScreenManager.Instance.ChangeScreens("LancerJeu");
             }
             if (itemNumber == 1 && InputManager.Instance.KeyPressed(Keys.Enter)
-                || itemNumber == 1 && GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
-            {
-                //A finir
-            }
-            if (itemNumber == 2 && InputManager.Instance.KeyPressed(Keys.Enter)
-                || itemNumber == 2 && GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
-            {
-                //A finir
-            }
-            if (itemNumber == 3 && InputManager.Instance.KeyPressed(Keys.Enter)
-                || itemNumber == 3 && GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed
-                || itemNumber == 3 && GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
+                || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
             {
                 MenuPrincipal.stateQuit = true;
             }

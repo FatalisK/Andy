@@ -58,6 +58,8 @@
     <Compile Include="ScreenCore\Image.cs" />
     <Compile Include="ScreenCore\ImageEffect.cs" />
     <Compile Include="ScreenCore\InputManager.cs" />
+    <Compile Include="ScreenCore\Menu\DeathMenu.cs" />
+    <Compile Include="ScreenCore\Menu\DeathMenuManager.cs" />
     <Compile Include="ScreenCore\Menu\Menu.cs" />
     <Compile Include="ScreenCore\Menu\MenuItem.cs" />
     <Compile Include="ScreenCore\Menu\MenuManager.cs" />
@@ -97,6 +99,9 @@
     <Content Include="Content\Decor\Ciel.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Images\Image1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Platforme\platforme4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -112,16 +117,13 @@
     <Content Include="Content\Sprite\pretreSprite.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\XMLFiles\DeathMenu.xml">
+    <Content Include="Content\XMLFiles\DeathScreen.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Decor\droiteM.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Decor\gaucheM.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Images\Image1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Images\Image2.jpg">

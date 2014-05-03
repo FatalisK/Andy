@@ -37,7 +37,7 @@ namespace Andy.Core
             if (sprite.location.X > _positionBase.X + x) { _direction = Direction.LEFT; }
             if (sprite.location.X <= _positionBase.X) { _direction = Direction.RIGHT; }
             //Console.WriteLine("c" +_direction);
-            if (_collisions > 0)
+            if (_collisions > 0 && _collisionSens!=Direction.TOP)
             {
                 if(_direction == Direction.RIGHT){
                     _direction = Direction.LEFT;

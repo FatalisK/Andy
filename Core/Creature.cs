@@ -12,18 +12,23 @@ namespace Andy.Core
     {
         protected World _world;
         protected float _mass;
+
         protected float _saut;
+        protected float _vitesseYAbs;
+      
+
         public bool collisionEnAir;
         protected int _collisions;
         public float Poids;
         public float Accel;
+
         protected bool taper;
         protected int _pvTotal;
         protected int _pvActuel;
         protected Sprite _s_vie;
         protected bool _estMort;
 
-
+        protected Direction _collisionSens;
 
         protected Vector2 _reculArme;//X=Le temps du recul Y=La valeur dont on recul à chaque update
         protected Vector2 _degatRecul;//X= nb de fois ou l'on recule, Y=valeur dont on recule
@@ -99,6 +104,17 @@ namespace Andy.Core
             return _vitesse.Y;
         }
 
+        public virtual float getVitesseYAbs()
+        {
+            return _vitesseYAbs;
+        }
+
+
+        public virtual void setVitesseY(float i)
+        {
+            _vitesse.Y=i;
+        }
+
         public World getWorld()
         {
             return _world;
@@ -118,10 +134,7 @@ namespace Andy.Core
         }
 
 
-        public virtual float getHauteurSaut()
-        {
-            return 1;
-        }
+
 
         public override void colllision(GameObjects p, List<Vector2> inter)
         {
@@ -212,6 +225,7 @@ namespace Andy.Core
                     {
                         sprite.location.X = sprite.location.X + (p.sprite.Bbox.Right - inter[minX].X);
                     }
+                    _collisionSens = Direction.RIGHT;
                 
             }
 
@@ -227,6 +241,8 @@ namespace Andy.Core
                   sprite.location.X = sprite.location.X - (inter[maxX].X - p.sprite.Bbox.Left);
 
                 }
+                _collisionSens = Direction.LEFT;
+
             }
 
             //se cogne en haut
@@ -243,7 +259,7 @@ namespace Andy.Core
                     sprite.location.Y = sprite.location.Y - (inter[minY].Y - p.sprite.Bbox.Top);
                 }
 
-                //TODO QUAND LA PLATOFORME BOUGE RESTER DESSUS
+                //QUAND LA PLATOFORME BOUGE RESTER DESSUS
                 if (p.getTypeObjet() == GameObjects.TypeObjet.PLAT)
                 {
 
@@ -257,6 +273,8 @@ namespace Andy.Core
                     if (p.getDirection() == Direction.BOT) { sprite.location.Y = sprite.location.Y + p.getPVitesseY(); }
 
                 }
+                _collisionSens = Direction.TOP;
+
             }
 
             //se cogne en bas
@@ -264,8 +282,11 @@ namespace Andy.Core
             {
                 //Console.WriteLine("Mass"+a.getMasse()+"P"+Poids+"M"+(0.5f * Accel + a.getVitesseY()));
                 setVeutSauter(false);
+                _collisionSens = Direction.BOT;
+
 
             }
+
 
 
             //}

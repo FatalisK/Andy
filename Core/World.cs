@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using Andy.ScreenCore;
 
 
 namespace Andy.Core
@@ -104,7 +105,7 @@ namespace Andy.Core
             { 
                 if (p.getVeutSauter())
                 {
-                    if (p.sprite.location.Y > p.getHauteurSaut())
+                    if (p.getVitesseY()>0)
                     {
                         if (p.getDirection() == Direction.RIGHT)
                         {
@@ -117,11 +118,14 @@ namespace Andy.Core
 
                         }
                         p.sprite.location.Y = p.sprite.location.Y - (0.5f * p.Accel + p.getVitesseY());
+                        p.setVitesseY(p.getVitesseY() - 1);
                     }
                     else
                     {
                         p.setVeutSauter(false);
+                        p.setVitesseY(p.getVitesseYAbs());
                     }
+                    Console.WriteLine(p.getVitesseY());
                 }
 
                 if (!p.getVeutSauter())
@@ -158,7 +162,7 @@ namespace Andy.Core
 
                 p.sprite.location.Y = p.sprite.location.Y + p.Poids;
 
-                Console.WriteLine("ici" + p.Poids);
+                //Console.WriteLine("ici" + p.Poids);
                 //if (p.sprite.location.Y + p.sprite.getFrameHeight() > _sol - p.sprite.getFrameHeight()) { p.sprite.location.Y = 0; p.sprite.location.X = 0; }
 
 
@@ -181,13 +185,13 @@ namespace Andy.Core
         public void leMondeEve()
         {
             Collision.Collided(_player, -1, _player.getWorld());
-            _player.Move(Keyboard.GetState());
+            _player.Move(Keyboard.GetState(), GamePad.GetState(PlayerIndex.One));
             _player.updatePlayer();
            gravite(_player);
 
            for (int i = 0; i < _listeCreat.Count; i++)
            {
-               //gravite(_listeCreat[i]);
+               gravite(_listeCreat[i]);
 
                _listeCreat[i].setCollisions(Collision.Collided(_listeCreat[i],i,_listeCreat[i].getWorld()));
                _listeCreat[i].updateCrea();

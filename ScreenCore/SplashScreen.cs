@@ -38,7 +38,9 @@ namespace Andy.ScreenCore
             base.Update(gameTime);
             Image.Update(gameTime);
 
-            if (InputManager.Instance.KeyPressed(Keys.Space, Keys.Enter))
+            if (InputManager.Instance.KeyPressed(Keys.Enter)
+                || GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed
+                || GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
                 ScreenManager.Instance.ChangeScreens("TitleScreen");
         }
 

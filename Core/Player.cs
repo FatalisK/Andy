@@ -16,6 +16,7 @@ namespace Andy.Core
         private float _hateurSautAbs = 100;
         ParticleEngine particleEngine;
 
+        
         public Direction ancienneDirection;
         public Player(Sprite s, World world, ParticleEngine pe,Sprite vie)
             : base(s, world,3)
@@ -37,6 +38,7 @@ namespace Andy.Core
             setSpriteVie(vie);
             _reculArme.X = 5;
             _reculArme.Y = 5;
+            _vitesseYAbs = 10;
 
             posArmR.W=35;
             posArmR.X=63;
@@ -60,17 +62,14 @@ namespace Andy.Core
 
   
 
-        public override float getHauteurSaut()
-        {
-            return _hauteurSaut;
-        }
+ 
 
         public override void setVeutSauter(bool b){
             _veutSauter=b;
 
         }
 
-        public void Move(KeyboardState state)
+        public void Move(KeyboardState state, GamePadState statePad)
         {
 
             //Console.WriteLine("DD" + _direction);
@@ -82,21 +81,26 @@ namespace Andy.Core
                 particleEngine.EmitterLocation = new Vector2(sprite.location.X + sprite.getFrameWidth()/2, sprite.location.Y + sprite.getFrameHeight());
                 particleEngine.Update();
             }
-    
 
-            if (keys.Length > 0)
+
+            if (keys.Length > 0 
+                || statePad.IsButtonDown(Buttons.A)
+                || statePad.IsButtonDown(Buttons.B)
+                || statePad.IsButtonDown(Buttons.DPadDown)
+                || statePad.IsButtonDown(Buttons.DPadLeft)
+                || statePad.IsButtonDown(Buttons.DPadRight))
             {
-
-
-
-                   if(state.IsKeyDown(Keys.V)){
+                   if(state.IsKeyDown(Keys.V)
+                       || statePad.Buttons.B == ButtonState.Pressed)
+                   {
                            _direction = Direction.TAPER;
 
                    }
                    else { 
  
 
-                    if (state.IsKeyDown(Keys.Z))
+                    if (state.IsKeyDown(Keys.Z)
+                        || statePad.Buttons.A == ButtonState.Pressed)
                     {
                         //Console.WriteLine("inT" + inTheAir() + "cc" + collisionEnAir);
 
@@ -114,14 +118,16 @@ namespace Andy.Core
 
                         }
                     }
-                    if (state.IsKeyDown(Keys.S))
+                    if (state.IsKeyDown(Keys.S)
+                        || statePad.DPad.Down == ButtonState.Pressed)
                     {
                         _direction = Direction.BOT;
 
 
                     }
                 
-                if (state.IsKeyDown(Keys.Q)/*&&_c_interdite!=Collision.Direction.LEFT*/)
+                if (state.IsKeyDown(Keys.Q)/*&&_c_interdite!=Collision.Direction.LEFT*/
+                        || statePad.DPad.Left == ButtonState.Pressed)
                 {
                     _direction = Direction.LEFT;
                     sprite.location.X -= _vitesse.X;
@@ -130,7 +136,8 @@ namespace Andy.Core
                     
                 }
 
-                if (state.IsKeyDown(Keys.D)/* && _c_interdite!=Collision.Direction.RIGHT*/)
+                if (state.IsKeyDown(Keys.D)/* && _c_interdite!=Collision.Direction.RIGHT*/
+                        || statePad.DPad.Right == ButtonState.Pressed)
                 {
                     _direction = Direction.RIGHT;
                     regard = Direction.RIGHT;
@@ -205,7 +212,7 @@ namespace Andy.Core
             if (_estMort)
             {
                 //Console.WriteLine("La mort par la tche tche");
-                ScreenManager.Instance.ChangeScreens("TitleScreen");
+                ScreenManager.Instance.ChangeScreens("DeathScreen");
 
             }
 
